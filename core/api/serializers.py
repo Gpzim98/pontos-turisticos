@@ -25,7 +25,7 @@ class PontoTuristicoSerializer(ModelSerializer):
             'atracoes', 'comentarios', 'avaliacoes', 'endereco',
             'descricao_completa', 'descricao_completa2', 'doc_identificacao'
         )
-        read_only_fields = ('comentarios', 'avaliacoes')
+        read_only_fields = ('comentarios', )
 
     def cria_atracoes(self, atracoes, ponto):
         for atracao in atracoes:
@@ -43,8 +43,13 @@ class PontoTuristicoSerializer(ModelSerializer):
         del validated_data['doc_identificacao']
         doci = DocIdentificacao.objects.create(**doc)
 
+        avaliacoes = validated_data['avaliacoes']
+        del validated_data['avaliacoes']
+
         ponto = PontoTuristico.objects.create(**validated_data)
         self.cria_atracoes(atracoes, ponto)
+
+        ponto.avaliacoes.set(avaliacoes)
 
         end = Endereco.objects.create(**endereco)
         ponto.endereco = end
