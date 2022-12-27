@@ -26,6 +26,7 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 DEBUG = True
 ALLOWED_HOSTS = ['pontos-tutisticos.herokuapp.com', 'localhost', '127.0.0.1']
 
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
 
 # Application definition
 
